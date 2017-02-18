@@ -1,2 +1,29 @@
 ---
 # defaults file for ansible_nagios_graylog2_nsca/
+
+graylog_web_uri: 'http://{{ ansible_host }}:9000/'
+
+graylog_plugin_dir:           '/usr/share/graylog-server/plugin'
+graylog2_plugin_exec_url: "https://github.com/nksft/graylog2-plugin-exec/releases/download/v1.0.0/execommand-alarmcallback-1.0.0.jar"
+
+# nagios configuration:
+ansible_nagios_graylog_setup_nagios_service: false
+ansible_nagios_graylog_setup_nagios_host: false
+
+nagios_etc: '/usr/local/nagios/etc'
+nagios_config_cfg_dir: "{{ nagios_etc }}/conf.d"
+
+ansible_nagios_graylog_hostname: ''
+ansible_nagios_graylog_parents: ''
+ansible_nagios_graylog_address: ''
+ansible_nagios_graylog_template: ''
+
+# Default location to put the script
+ansible_nagios_graylog_nsca_script: '/usr/local/sbin/graylog2-alert.sh'
+
+ansible_nagios_graylog_nagios_servers: []
+# - server
+ansible_nagios_graylog_nagios_streams: []
+# - name: "Graylog2-STREAM_NAME"
+#   contact_group: "Graylog2-STREAM_NAME"
+#   members: "admins"

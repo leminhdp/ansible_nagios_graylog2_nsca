@@ -1,0 +1,15 @@
+---
+# graylog2_config.yml file for ansible_nagios_graylog2_nsca/tasks
+
+- name: Install graylog2-plugin-exec
+  get_url: 
+    url: "{{ graylog2_plugin_exec_url }}"
+    dest: "{{ graylog_plugin_dir }}/execommand-alarmcallback.jar"
+    mode: u=rwx,g=rx,o=rx
+  notify: restart graylog-server
+
+- name: create script graylog2-alert.sh
+  template:
+    dest: "{{ ansible_nagios_graylog_nsca_script }}"
+    src: "graylog2-alert.sh.j2"
+    mode: u=rwx,g=rx,o=rx

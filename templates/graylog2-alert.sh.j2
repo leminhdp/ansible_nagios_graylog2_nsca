@@ -1,0 +1,20 @@
+#!/bin/bash
+ 
+# nagios servers to notify
+NAGIOS_SERVERS="{% for server in nagios_servers %} {{ server }} {% endfor %}"
+# add a link to the nagios message, so it's easy to access the interface
+# on your mobile device once you get an alert
+GL2_LINK="{{ graylog_web_uri }}/streams"
+ 
+main() {
+    local tmp_file=`mktemp`
+    local gl2_topic=`echo $GL2_TOPIC | cut -d'[' -f2 | cut -d']' -f1`
+    echo `hostname`";Graylog2-$gl2_topic;2;$GL2_LINK $GL2_DESCRIPTION" > $tmp_file
+    local nagios_server
+    for nagios_server in $NAGIOS_SERVERS; do
+        /usr/sbin/send_nsca -d ';' -H $nagios_server < $tmp_file
+    done
+    rm -f $tmp_file
+}
+ 
+main "$@"
