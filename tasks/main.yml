@@ -1,4 +1,9 @@
 ---
 # tasks file for ansible_nagios_graylog2_nsca/
 
+- name: Install nsca client
+  package:
+    name: "{{ nsca_client_package }}"
+    state: present
+
 - include: graylog2_config.yml

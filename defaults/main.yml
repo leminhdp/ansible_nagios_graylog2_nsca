@@ -14,3 +14,4 @@ ansible_nagios_graylog_nsca_script: '/usr/local/sbin/graylog2-alert.sh'
 graylog2_plugin_exec_url: "https://github.com/nksft/graylog2-plugin-exec/releases/download/v1.0.0/execommand-alarmcallback-1.0.0.jar"
 graylog_plugin_dir:       '/usr/share/graylog-server/plugin'
 
+nsca_client_package: nsca-client
