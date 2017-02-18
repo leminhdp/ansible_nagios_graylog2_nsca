@@ -5,11 +5,14 @@ NAGIOS_SERVERS="{% for server in ansible_nagios_graylog_nagios_servers %}{{ serv
 # add a link to the nagios message, so it's easy to access the interface
 # on your mobile device once you get an alert
 GL2_LINK="{{ graylog_web_uri }}/streams"
+GL2_SERVICE="$1"
+
  
 main() {
     local tmp_file=`mktemp`
     local gl2_topic=`echo $GL2_TOPIC | cut -d'[' -f2 | cut -d']' -f1`
-    echo `hostname`";Graylog2-$gl2_topic;2;$GL2_LINK $GL2_DESCRIPTION" > $tmp_file
+
+    echo `hostname | tr "[:lower:]" "[:upper:]"`";$GL2_SERVICE;2;$GL2_LINK" > $tmp_file
     local nagios_server
     for nagios_server in $NAGIOS_SERVERS; do
         /usr/sbin/send_nsca -d ';' -H $nagios_server < $tmp_file

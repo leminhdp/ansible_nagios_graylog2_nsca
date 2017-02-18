@@ -6,7 +6,7 @@ ansible_nagios_graylog_nagios_servers: []
 # - server
 
 # Default vars for the script
-graylog_web_uri: 'http://{{ ansible_host }}:9000/'
+graylog_web_uri: 'http://{{ ansible_host }}'
 # Default location to put the script
 ansible_nagios_graylog_nsca_script: '/usr/local/sbin/graylog2-alert.sh'
 
