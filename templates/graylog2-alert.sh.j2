@@ -1,7 +1,7 @@
 #!/bin/bash
  
 # nagios servers to notify
-NAGIOS_SERVERS="{% for server in nagios_servers %} {{ server }} {% endfor %}"
+NAGIOS_SERVERS="{% for server in ansible_nagios_graylog_nagios_servers %}{{ server }} {% endfor %}"
 # add a link to the nagios message, so it's easy to access the interface
 # on your mobile device once you get an alert
 GL2_LINK="{{ graylog_web_uri }}/streams"

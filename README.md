@@ -2,7 +2,7 @@
 Role Name
 =========
 
-*ansible_nagios_graylog2_nsca*  
+**ansible_nagios_graylog2_nsca**  
 Graylog2 script and nagios automatic configuration to have nsca scripts for your streams. (Send notifications to nagio
 
 Starting this work based on: 
@@ -21,12 +21,24 @@ Any pre-requisites that may not be covered by Ansible itself or the role should 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Check [defaults/main.yml](defaults/main.yml) file for details
+
+
+Configure graylog for exec
+--------------------------
+
+Checkout doc: https://github.com/nksft/graylog2-plugin-exec#usage
+
+Create a **"Execute Command Alarm Callback"** on the **"Manage alerts"** page of your stream. Enter the requested configuration and save. Make sure you also configured alert conditions for the stream so that the alerts are actually triggered.
+
+Add Bash command: `/usr/local/sbin/graylog2-alert.sh`  (or whatever you have put on ansible_nagios_graylog_nsca_script)
 
 Dependencies
 ------------
 
 A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+
+Not a dependency but you can use https://github.com/CoffeeITWorks/ansible_nagios_graylog2_nsca_config_nagios to complete the nagios config.
 
 Example Playbook
 ----------------
@@ -35,7 +47,10 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+          - role: ansible_nagios_graylog2_nsca
+            tags:
+              - role::ansible_nagios_graylog2_nsca
+              - graylog2_servers
 
 License
 -------

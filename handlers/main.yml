@@ -5,8 +5,3 @@
   service:
     name: 'graylog-server'
     state: restarted
-
-- name: Reload Nagios
-  service:
-    name: "{{ nagios_service }}"
-    state: reloaded

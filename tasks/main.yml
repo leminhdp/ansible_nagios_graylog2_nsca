@@ -2,5 +2,3 @@
 # tasks file for ansible_nagios_graylog2_nsca/
 
 - include: graylog2_config.yml
-
-- include: nagios_config.yml

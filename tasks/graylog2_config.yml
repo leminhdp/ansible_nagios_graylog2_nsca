@@ -5,7 +5,7 @@
   get_url: 
     url: "{{ graylog2_plugin_exec_url }}"
     dest: "{{ graylog_plugin_dir }}/execommand-alarmcallback.jar"
-    mode: u=rwx,g=rx,o=rx
+    mode: u=rw,g=r,o=r
   notify: restart graylog-server
 
 - name: create script graylog2-alert.sh
