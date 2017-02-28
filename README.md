@@ -45,12 +45,17 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - hosts: graylog2_servers
       roles:
           - role: ansible_nagios_graylog2_nsca
             tags:
               - role::ansible_nagios_graylog2_nsca
               - graylog2_servers
+
+Example run
+-----------
+
+    ansible-playbook -i inventory roles.graylog2.yml -K -k -v --tags role::ansible_nagios_graylog2_nsca
 
 License
 -------
