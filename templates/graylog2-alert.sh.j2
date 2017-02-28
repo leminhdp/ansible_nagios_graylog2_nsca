@@ -4,20 +4,40 @@
 NAGIOS_SERVERS="{% for server in ansible_nagios_graylog_nagios_servers %}{{ server }} {% endfor %}"
 # add a link to the nagios message, so it's easy to access the interface
 # on your mobile device once you get an alert
-GL2_LINK="{{ graylog_web_uri }}/streams"
-GL2_SERVICE="$1"
 
- 
+GL2_LOGFOLDER="/var/log/graylog-server"
+LOG_FILE="${GL2_LOGFOLDER}/gl2_alert_sh.log"
+LOG_ENABLE=0
+
+GL2_SERVICE=`echo "$1" | cut -d" " -f1`
+GL2_LINK="{{ graylog_web_uri }}/streams"
+arg2=`echo "$1" | cut -d" " -f2`
+if [ ! -z $arg2 ]; then
+    GL2_LINK="$arg2"
+fi
+
+logging() {
+    local msg="$1"
+    if [ ! -z $LOG_ENABLE ]; then
+        echo "${msg}" >> $LOG_FILE
+    fi
+}
+
 main() {
     local tmp_file=`mktemp`
     local gl2_topic=`echo $GL2_TOPIC | cut -d'[' -f2 | cut -d']' -f1`
 
     echo `hostname | tr "[:lower:]" "[:upper:]"`";$GL2_SERVICE;2;$GL2_LINK" > $tmp_file
+    local message=`cat $tmp_file`
+    logging "message: ${message}"
     local nagios_server
     for nagios_server in $NAGIOS_SERVERS; do
         /usr/sbin/send_nsca -d ';' -H $nagios_server < $tmp_file
     done
     rm -f $tmp_file
 }
- 
+
+logging "parameters received: ${@}"
+environment=`env`
+logging "environment is: ${environment}"
 main "$@"
